@@ -3,10 +3,12 @@ import { strict as assert } from 'node:assert';
 import { formatPastedMail, quoteLine } from '../textTools';
 
 test('formatPastedMail', () => {
-    assert.equal(formatPastedMail('A\n \n\nB'), 'A\n\nB');
+    assert.equal(formatPastedMail('A\n\n \n\nB'), 'A\n\nB');
+    assert.equal(formatPastedMail('A\r\n\r\n \r\n\r\nB'), 'A\n\nB'); // CRLF
     assert.equal(formatPastedMail('A\n\n\nB'), 'A\n\nB');
-    assert.equal(formatPastedMail('A\n \n\n\n\nB'), 'A\n\n\nB'); // 仕様どおり。下の注意参照
-    assert.equal(formatPastedMail('A\r\n \r\n\r\nB'), 'A\n\nB'); // CRLF
+    assert.equal(formatPastedMail('A\n\n \n\n\n\nB'), 'A\n\n\nB'); // 空白行 + 空白行 x 2
+    assert.equal(formatPastedMail('A\n\n \n\n \n\nB'), 'A\n\n\nB'); // 空白行が2つ連続
+
 });
 
 test('quoteLine', () => {

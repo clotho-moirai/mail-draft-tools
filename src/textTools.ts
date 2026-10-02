@@ -2,7 +2,8 @@
 export function formatPastedMail(text: string): string {
   return text
     .replace(/\r\n/g, '\n')
-    .replaceAll('\n \n\n', '\n\n')
+    .replaceAll('\n\n \n\n \n\n', '\n\n\n\n\n\n')
+    .replaceAll('\n\n \n\n', '\n\n\n\n')
     .replaceAll('\n\n', '\n');
 }
 
